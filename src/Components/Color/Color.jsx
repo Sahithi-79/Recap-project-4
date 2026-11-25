@@ -1,8 +1,10 @@
 import "./Color.css";
 import { useState } from "react";
+import ColorForm from "../ColorForm/ColorForm";
 
-export default function Color({ color, onDeleteColor }) {
+export default function Color({ color, onDeleteColor, onUpdateColor }) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   return (
     <article
       className="color-card"
@@ -11,11 +13,21 @@ export default function Color({ color, onDeleteColor }) {
         color: color.contrastText,
       }}
     >
-      <h2 className="color-card-headline">{color.hex}</h2>
+      {isEditing ? (
+        <ColorForm
+          initialData={color}
+          onUpdateColor={onUpdateColor}
+          onCancel={() => setIsEditing(false)}
+        />
+      ) : (
+        <>
+          <h2 className="color-card-headline">{color.hex}</h2>
+          <p>{color.role}</p>
+          <p>Contrast: {color.contrastText}</p>
+          <button onClick={() => setIsEditing(true)}>EDIT</button>
+        </>
+      )}
 
-      <p>{color.role}</p>
-
-      <p>Contrast: {color.contrastText}</p>
       {isDeleting ? (
         <>
           <span className="color-card-headline">Really delete?</span>

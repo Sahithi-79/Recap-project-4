@@ -1,20 +1,39 @@
 import { useState } from "react";
 import "./ColorForm.css";
 
-export default function ColorForm({ onAddColor }) {
-  const [hex, setHex] = useState("#54c73d");
-  const [role, setRole] = useState("some color");
-  const [contrastText, setContrastText] = useState("#000000");
+export default function ColorForm({
+  onAddColor,
+  initialData,
+  onUpdateColor,
+  onCancel,
+}) {
+  const [hex, setHex] = useState(initialData?.hex || "#54c73d");
+  const [role, setRole] = useState(initialData?.role || "some color");
+  const [contrastText, setContrastText] = useState(
+    initialData?.contrastText || "#000000",
+  );
 
   return (
     <form
       className="color-form"
       onSubmit={(event) => {
         event.preventDefault();
-        onAddColor({ hex, role, contrastText });
+
+        if (initialData) {
+          onUpdateColor({
+            id: initialData.id,
+            hex,
+            role,
+            contrastText,
+          });
+
+          onCancel();
+        } else {
+          onAddColor({ hex, role, contrastText });
+        }
       }}
     >
-      <h2>Add a new color</h2>
+      <h2>{initialData ? "Edit color" : "Add a new color"}</h2>
 
       <div className="form-group">
         <label htmlFor="role">Role</label>
@@ -63,7 +82,15 @@ export default function ColorForm({ onAddColor }) {
         </div>
       </div>
 
-      <button type="submit">ADD COLOR</button>
+      <button type="submit">
+        {initialData ? "UPDATE COLOR" : "ADD COLOR"}
+      </button>
+
+      {initialData && (
+        <button type="button" onClick={onCancel}>
+          CANCEL
+        </button>
+      )}
     </form>
   );
 }
