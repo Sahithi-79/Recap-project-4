@@ -1,6 +1,8 @@
 import "./Color.css";
+import { useState } from "react";
 
-export default function Color({ color }) {
+export default function Color({ color, onDeleteColor }) {
+  const [isDeleting, setIsDeleting] = useState(false);
   return (
     <article
       className="color-card"
@@ -14,6 +16,15 @@ export default function Color({ color }) {
       <p>{color.role}</p>
 
       <p>Contrast: {color.contrastText}</p>
+      {isDeleting ? (
+        <>
+          <span className="color-card-headline">Really delete?</span>
+          <button onClick={() => setIsDeleting(false)}>CANCEL</button>
+          <button onClick={() => onDeleteColor(color.id)}>DELETE</button>
+        </>
+      ) : (
+        <button onClick={() => setIsDeleting(true)}>DELETE</button>
+      )}
     </article>
   );
 }
