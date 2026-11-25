@@ -12,6 +12,14 @@ function App() {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
+  function handleUpdateColor(updatedColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === updatedColor.id ? updatedColor : color,
+      ),
+    );
+  }
+
   function handleDeleteColor(id) {
     setColors(colors.filter((color) => color.id !== id));
   }
@@ -29,6 +37,7 @@ function App() {
             key={color.id}
             color={color}
             onDeleteColor={handleDeleteColor}
+            onUpdateColor={handleUpdateColor}
           />
         ))
       )}
