@@ -7,11 +7,15 @@ import ContrastChecker from "../ContrastChecker/ContrastChecker";
 export default function Color({ color, onDeleteColor, onUpdateColor }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+
+  {
+    /* color card component that displays the color information and provides
+      options to edit or delete the color.
+      The background color of the card is set to the color's hex value,
+      and the text color is set to the contrast text value. */
+  }
+
   return (
-    //color card component that displays the color information and provides
-    // options to edit or delete the color.
-    // The background color of the card is set to the color's hex value,
-    // and the text color is set to the contrast text value.
     <article
       className="color-card"
       style={{
@@ -19,8 +23,9 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
         color: color.contrastText,
       }}
     >
-      If the user is editing the color, a ColorForm component is rendered // to
-      allow them to update the color information.
+      {/* If the user is editing the color, a ColorForm component is rendered to
+      allow them to update the color information. */}
+
       {isEditing ? (
         <ColorForm
           initialData={color}
@@ -31,6 +36,7 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
       ) : (
         //is editing false, the color information is displayed
         // along with options to copy the hex value to the clipboard,
+
         <>
           <h2 className="color-card-headline">{color.hex}</h2>
           <CopyToClipboard hex={color.hex} />
@@ -40,8 +46,10 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
           <button onClick={() => setIsEditing(true)}>EDIT</button>
         </>
       )}
-      // If the user is deleting the color, a confirmation message is displayed
-      with options // to cancel or confirm the deletion.
+
+      {/* If the user is deleting the color, a confirmation message is displayed
+      with options // to cancel or confirm the deletion. */}
+
       {isDeleting ? (
         <>
           <span className="color-card-headline">Really delete?</span>
