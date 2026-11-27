@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 
 export default function CopyToClipboard({ hex }) {
   const [isCopied, setIsCopied] = useState(false);
+
   function handleCopy() {
+    // Copy the hex value to the clipboard and set isCopied to true
     navigator.clipboard.writeText(hex);
     setIsCopied(true);
   }
@@ -19,7 +21,7 @@ export default function CopyToClipboard({ hex }) {
     <>
       <button onClick={handleCopy}>COPY</button>
 
-      {isCopied ? <p>SUCCESSFULLY COPIED!</p> : null}
+      {isCopied ? <p>COPIED!</p> : null}
     </>
   );
 }

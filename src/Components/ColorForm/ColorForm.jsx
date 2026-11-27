@@ -1,16 +1,27 @@
 import { useState } from "react";
 import "./ColorForm.css";
 
+// ColorForm is a form that allows users to add or update color information.
+// It takes in props for adding a new color, updating an existing color,
+// and canceling the form.
+// The form includes input fields for the color's role, hex value, and contrast text,
+// along with color pickers for the hex and contrast text values.
+// When the form is submitted,
+// it either adds a new color or updates an existing one based on whether initialData
+// is provided.
+
 export default function ColorForm({
   onAddColor,
   initialData,
   onUpdateColor,
   onCancel,
 }) {
-  const [hex, setHex] = useState(initialData?.hex || "#54c73d");
-  const [role, setRole] = useState(initialData?.role || "some color");
+  const [hex, setHex] = useState(initialData ? initialData.hex : "#54c73d");
+  const [role, setRole] = useState(
+    initialData ? initialData.role : "some color",
+  );
   const [contrastText, setContrastText] = useState(
-    initialData?.contrastText || "#000000",
+    initialData ? initialData.contrastText : "#000000",
   );
 
   return (
@@ -18,6 +29,8 @@ export default function ColorForm({
       className="color-form"
       onSubmit={(event) => {
         event.preventDefault();
+
+        //either adds a new color or updates an existing one based on whether initialData is provided
 
         if (initialData) {
           onUpdateColor({
@@ -33,8 +46,6 @@ export default function ColorForm({
         }
       }}
     >
-      <h2>{initialData ? "Edit color" : "Add a new color"}</h2>
-
       <div className="form-group">
         <label htmlFor="role">Role</label>
         <input

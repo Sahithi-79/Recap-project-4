@@ -17,6 +17,8 @@ function App() {
 
   const [selectedThemeId, setSelectedThemeId] = useState("t1");
   const [isEditingTheme, setIsEditingTheme] = useState(false);
+
+  //adding a new theme object
   function handleAddTheme() {
     const newTheme = {
       id: nanoid(),
@@ -24,9 +26,12 @@ function App() {
       colors: [],
     };
 
+    // Add the new theme to the themes state and select it
     setThemes([...themes, newTheme]);
     setSelectedThemeId(newTheme.id);
   }
+
+  //updating the name of the theme object
 
   function handleUpdateTheme(updatedName) {
     setThemes(
@@ -36,11 +41,16 @@ function App() {
     );
   }
 
+  //deleting the theme object using the filter method to remove the selected theme
+  //editing false for the default theme
+
   function handleDeleteTheme() {
     setThemes(themes.filter((theme) => theme.id !== selectedThemeId));
     setSelectedThemeId("t1");
     setIsEditingTheme(false);
   }
+
+  //adding a new color object to the colors state and the selected theme's colors array
 
   function handleAddColor(newColor) {
     const newColorWithId = {
@@ -59,6 +69,8 @@ function App() {
     );
   }
 
+  //updating the color object in the colors state and the selected theme's colors array
+
   function handleUpdateColor(updatedColor) {
     setAllColors(
       allColors.map((color) =>
@@ -66,6 +78,8 @@ function App() {
       ),
     );
   }
+
+  //deleting the color object from the colors state and the selected theme's colors array
 
   function handleDeleteColor(id) {
     setAllColors(allColors.filter((color) => color.id !== id));
@@ -78,6 +92,7 @@ function App() {
     );
   }
 
+  //connects the selected theme to the colors state by filtering the colors based on the selected theme's colors array
   const selectedTheme = themes.find((theme) => theme.id === selectedThemeId);
 
   const colors = allColors.filter((color) =>
@@ -97,7 +112,6 @@ function App() {
       >
         EDIT
       </button>
-
       <button
         type="button"
         onClick={handleDeleteTheme}
@@ -124,6 +138,7 @@ function App() {
           </button>
         </form>
       )}
+      //When you select another theme, this state changes.
       <select
         value={selectedThemeId}
         onChange={(event) => setSelectedThemeId(event.target.value)}
@@ -133,9 +148,11 @@ function App() {
             {theme.name}
           </option>
         ))}
+        //colorform component is rendered to add a new color to the selected
+        theme. The handleAddColor function is passed as a prop to the ColorForm
+        component, which will be called when the form is submitted.
       </select>
       <ColorForm onAddColor={handleAddColor} />
-
       {colors.length === 0 ? (
         <p>No colors yet. Add a new color to your theme!</p>
       ) : (
